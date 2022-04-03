@@ -1,5 +1,3 @@
-from numpy import matrix
-
 n = 4
 
 def printmatrix(matrix):
@@ -8,9 +6,9 @@ def printmatrix(matrix):
         for j in range(n):
             print("|", end=" ")
             if matrix[i][j] == n**2:
-                print(" ", end=" ")
+                print("  ", end=" ")
             else:
-                print("%d" % (matrix[i][j]), end = " ")
+                print(str(matrix[i][j]).ljust(2), end = " ")
         print("|")
     print("-----" * n)
 
@@ -19,7 +17,7 @@ def printRute(root):
 	if root == None:
 		return
 	printRute(root.parent)
-	print(f"Cost: {root.cost}, Level: {root.level}")
+	print(f"LEVEL: {root.level}, PREVIOUS MOVE: {root.prevMove}")
 	printmatrix(root.matrix)
 	print()
 
