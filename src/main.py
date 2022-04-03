@@ -1,13 +1,10 @@
-from mimetypes import init
 import time
 import os.path
-
 from inputPuzzle import *
 from node import *
 from helper import *
 from solver import *
 
-n = 4
 
 print("------------------WELCOME TO 15 PUZZLE SOLVER----------------------")
 print("""
@@ -21,13 +18,14 @@ print("""
                                                                  
 """)
 
+n = 4			# puzzle size is n x n
 isRun = True
 
 while(isRun):
 	print("You can use initial puzzle from")
 	print("1. File")
 	print("2. Randomizer")
-	opsi = int(input("Choose initial puzzle from: "))
+	opsi = int(input("Choose initial puzzle from: (1-2) \n>> "))
 	inputExist = False
 
 	if opsi == 1:
@@ -48,14 +46,15 @@ while(isRun):
 		print("Initial Puzzle:")
 		printmatrix(initial)
 		print()
+		print("Nilai Kurang(i)")
 		for i in range(1, n**2+1):
-			print(f"{i} = {kurangI(initial, i)}")
+			print(f"Kurang({i}) = {kurangI(initial, i)}")
 		print(f"SumKurangI+X = {SumKurangIplusX(initial)}")
 		print()
 
 		if (isReachable(initial)):
 			print("THIS PUZZLE IS SOLVEABLE:D\n")
-			print("Please wait for a while...")
+			print("Please wait for a while...\n")
 			start = time.time()
 			solution, totalNodes = solve(initial)
 			end = time.time()
@@ -65,10 +64,13 @@ while(isRun):
 			print(f"Total nodes raised 	: {totalNodes}")
 		else:
 			print("THIS PUZZLE IS NOT SOLVEABLE :(")
+		print()
 	
-	loop = input("Wanna try another puzzle? (y/n) ")
+	loop = input("Wanna try another puzzle? (y/n) \n>> ")
 	if (loop.upper() == "Y"):
 		isRun = True
+		print()
 	else:
+		print("--------------------THANK YOU--------------------")
 		isRun = False
 	

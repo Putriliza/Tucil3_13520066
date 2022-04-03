@@ -1,5 +1,11 @@
-n = 4
+from typing import Tuple
 
+from pandas import array
+
+
+n = 4       # Puzzle size is n x n
+
+# Function to print matrix
 def printmatrix(matrix):
     for i in range(n):
         print("-----" * n)
@@ -12,6 +18,7 @@ def printmatrix(matrix):
         print("|")
     print("-----" * n)
 
+# Recursive function to print the solution from root
 def printRute(root):
 	
 	if root == None:
@@ -21,34 +28,41 @@ def printRute(root):
 	printmatrix(root.matrix)
 	print()
 
-def isValid(x, y):
-    return x >= 0 and x < n and y >= 0 and y < n
 
+# Return true if this position are in valid in matrix
+def isValid(position) -> bool:
+    return position[0] >= 0 and position[0] < n and position[1] >= 0 and position[1] < n
+
+# Return tuple (i, j) of position of x in matrix
 def getXPos2D(matrix, x):
     n = len(matrix)
     for i in range(n):
         for j in range(n):
             if matrix[i][j] == x:
-                return [i, j]
+                return (i, j)
 
-def getXPos(matrix, x):
+# Return posion of x in matrix (0-15)
+def getXPos(matrix, x) -> int:
 	x1, x2 = getXPos2D(matrix, x)
 	return x1 * n + x2
 
-def kurangI(matrix, i):
+# Count tile with number j which i > j but position(j)<position(i)
+def kurangI(matrix, i) -> int:
 	kurangI = 0
 	for j in range (1, i):
 		if getXPos(matrix, j) > getXPos(matrix, i):
 			kurangI += 1
 	return kurangI
 
-def SumKurangIplusX(matrix):
+# Sum of kurangI(i) + x for i from 1 to n**2
+def SumKurangIplusX(matrix) -> int:
     SumKurangI = 0
     for i in range(1, n**2+1):
         SumKurangI += kurangI(matrix, i)
-    x1, x2 = getXPos2D(matrix, n**2)
-    X = (x1 + x2) % 2
+    x1, y1 = getXPos2D(matrix, n**2)    # empty tile position
+    X = (x1 + y1) % 2                   # 1 if empty tile are in shadow area, 0 if not
     return SumKurangI + X
 
-def isReachable(matrix):
+# Return true if matrix is solvable
+def isReachable(matrix) -> bool:
     return SumKurangIplusX(matrix) % 2 == 0

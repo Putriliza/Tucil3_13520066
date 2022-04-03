@@ -1,5 +1,4 @@
 import numpy as np
-
 import copy
 
 from inputPuzzle import *
@@ -7,44 +6,53 @@ from queue import PriorityQueue
 from node import *
 from helper import *
 
+# Store the final state of puzzle
 final = np.array([[ 1, 2, 3, 4],
-		 [5, 6, 7, 8],
-		 [9, 10, 11 , 12],
-		 [13, 14, 15, 16]])
+				  [5, 6, 7, 8],
+				  [9, 10, 11 , 12],
+				  [13, 14, 15, 16]])
 
+# Store the name of direction of each move
 direction = ['UP', 'RIGHT', 'DOWN', 'LEFT']
 
-visitedMatrix = {}
+# Store the matrix that have been raised, unique
+raisedMatrix = {}
 
-def newNode(newEmptyTilePos, liveNode, prevMove) -> node:
+# function to create new node
+def newNode(liveNode, newEmptyTilePos, prevMove) -> node:
 	newMatrix = copy.deepcopy(liveNode.matrix)
 
 	x1, y1 = liveNode.emptyTilePos
 	x2, y2 = newEmptyTilePos
+
+	# change position of empty tile to the other tile based on previous move
 	newMatrix[x1][y1], newMatrix[x2][y2] = newMatrix[x2][y2], newMatrix[x1][y1]
 
 	level = liveNode.level + 1						# f(i)
 	missplaced = calculateMissplaced(newMatrix)		# g(i)
 	cost = level + missplaced						# c(i) = f(i) + g(i)
 
-	if (newMatrix.tobytes() in visitedMatrix):
+	if (newMatrix.tobytes() in raisedMatrix):
+		# if matrix has been raised before, it wont be raised again
 		return None
 	else:
-		visitedMatrix[newMatrix.tobytes()] = True
+		# raised the new node
+		raisedMatrix[newMatrix.tobytes()] = True
 		newnode = node(newMatrix, newEmptyTilePos, cost, level, liveNode, prevMove)
 		return newnode
 
+# count how many missplaced tile in matrix
 def calculateMissplaced(matrix) -> int:
-	cost = 0
+	count = 0
 	for i in range(n):
 		for j in range(n):
 			if (matrix[i][j] != final[i][j]):
 				if matrix[i][j] == n**2:
 					continue
-				cost += 1
-				
-	return cost
+				count += 1
+	return count
 
+# move empty tile to the position based on direction
 def move(currentPos, i):
 	# i = 0: move up
 	# i = 1: move right
@@ -56,26 +64,31 @@ def move(currentPos, i):
 	x1, y1 = currentPos
 	return [x1 + moverow[i], y1 + movecol[i]]
 
+# main algorithm to solve 15 puzzle based on Branch and Bound algorithm
 def solve(initial):
 	pq = PriorityQueue()
 	totalNodes = 0
-	
 	level = 0
 	cost = calculateMissplaced(initial) + level
 	emptyTilePos = getXPos2D(initial, n**2)
+
 	root = node(initial, emptyTilePos, cost, level, None, None)
 	pq.put(root)
 
+	# Loop until the prioqueue is empty or the goal is found
 	while not pq.empty():
+		# get the node with lowest cost
 		liveNode = pq.get()
 
-		if liveNode.cost == liveNode.level: # g = 0, tidak ada missplaced, ditemukan
+		if liveNode.cost == liveNode.level:
+			# g = 0, no more missplaced tiles, goal found
 			return liveNode, totalNodes
 
 		for i in range(4):
+			# move empty tile to the position based on 4 possible direction, and raised the new nodes
 			newEmptyTilePos = move(liveNode.emptyTilePos, i)
-			if isValid(newEmptyTilePos[0], newEmptyTilePos[1]):
-				child = newNode(newEmptyTilePos, liveNode, direction[i])
+			if isValid(newEmptyTilePos):
+				child = newNode(liveNode, newEmptyTilePos, direction[i])
 				if child != None:
 					pq.put(child)
 					totalNodes += 1
