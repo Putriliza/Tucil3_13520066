@@ -1,8 +1,3 @@
-from typing import Tuple
-
-from pandas import array
-
-
 n = 4       # Puzzle size is n x n
 
 # Function to print matrix

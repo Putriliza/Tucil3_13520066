@@ -6,8 +6,8 @@ from queue import PriorityQueue
 from node import *
 from helper import *
 
-# Store the final state of puzzle
-final = np.array([[ 1, 2, 3, 4],
+# Store the goal state of puzzle
+goal = np.array([[ 1, 2, 3, 4],
 				  [5, 6, 7, 8],
 				  [9, 10, 11 , 12],
 				  [13, 14, 15, 16]])
@@ -46,7 +46,7 @@ def calculateMissplaced(matrix) -> int:
 	count = 0
 	for i in range(n):
 		for j in range(n):
-			if (matrix[i][j] != final[i][j]):
+			if (matrix[i][j] != goal[i][j]):
 				if matrix[i][j] == n**2:
 					continue
 				count += 1
