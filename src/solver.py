@@ -64,6 +64,10 @@ def move(currentPos, i):
 	x1, y1 = currentPos
 	return [x1 + moverow[i], y1 + movecol[i]]
 
+# Return true if this position are in valid in matrix
+def isValid(position) -> bool:
+    return position[0] >= 0 and position[0] < n and position[1] >= 0 and position[1] < n
+
 # main algorithm to solve 15 puzzle based on Branch and Bound algorithm
 def solve(initial):
 	pq = PriorityQueue()

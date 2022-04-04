@@ -14,19 +14,16 @@ def printmatrix(matrix):
     print("-----" * n)
 
 # Recursive function to print the solution from root
-def printRute(root):
-	
-	if root == None:
-		return
-	printRute(root.parent)
-	print(f"LEVEL: {root.level}, PREVIOUS MOVE: {root.prevMove}")
-	printmatrix(root.matrix)
-	print()
-
-
-# Return true if this position are in valid in matrix
-def isValid(position) -> bool:
-    return position[0] >= 0 and position[0] < n and position[1] >= 0 and position[1] < n
+def printRute(node):
+    if node == None:
+        return
+    printRute(node.parent)
+    if node.parent == None:
+        print(f"LEVEL: {node.level}, INITIAL")
+    else:
+        print(f"LEVEL: {node.level}, PREVIOUS MOVE: {node.prevMove}")
+    printmatrix(node.matrix)
+    print()
 
 # Return tuple (i, j) of position of x in matrix
 def getXPos2D(matrix, x):

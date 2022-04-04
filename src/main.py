@@ -1,5 +1,5 @@
 import time
-import os.path
+import os
 from inputPuzzle import *
 from node import *
 from helper import *
@@ -29,7 +29,7 @@ while(isRun):
 	inputExist = False
 
 	if opsi == 1:
-		filename = input("Enter filename: ")
+		filename = input("Enter filename: \n>> ")
 		if (os.path.exists("../test/" + filename)):
 			initial = inputFromFile(filename)
 			inputExist = True
@@ -53,7 +53,7 @@ while(isRun):
 		print()
 
 		if (isReachable(initial)):
-			print("THIS PUZZLE IS SOLVEABLE:D\n")
+			print("THIS PUZZLE IS SOLVABLE:D\n")
 			print("Please wait for a while...\n")
 			start = time.time()
 			solution, totalNodes = solve(initial)
@@ -63,7 +63,7 @@ while(isRun):
 			print(f"Time elapsed 		: {end-start} seconds")
 			print(f"Total nodes raised 	: {totalNodes}")
 		else:
-			print("THIS PUZZLE IS NOT SOLVEABLE :(")
+			print("THIS PUZZLE IS NOT SOLVABLE :(")
 		print()
 	
 	loop = input("Wanna try another puzzle? (y/n) \n>> ")
