@@ -53,7 +53,7 @@ while(isRun):
 		print()
 
 		if (isReachable(initial)):
-			print("THIS PUZZLE IS SOLVABLE:D\n")
+			print("THE GOAL IS REACHABLE FROM THIS PUZZLE :D\n")
 			print("Please wait for a while...\n")
 			start = time.time()
 			solution, totalNodes = solve(initial)
@@ -63,7 +63,7 @@ while(isRun):
 			print(f"Time elapsed 		: {end-start} seconds")
 			print(f"Total nodes raised 	: {totalNodes}")
 		else:
-			print("THIS PUZZLE IS NOT SOLVABLE :(")
+			print("THE GOAL IS NOT REACHABLE FROM THIS PUZZLE :(")
 		print()
 	
 	loop = input("Wanna try another puzzle? (y/n) \n>> ")

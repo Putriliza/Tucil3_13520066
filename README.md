@@ -10,7 +10,6 @@ This is the goal state for all instances of the 15-puzzle problem <br />
 - [python 3](https://www.python.org/downloads/)
 - [numpy](https://numpy.org/install/)
 
-
 ### HOW TO RUN
 - First, clone this repository
     ```
@@ -35,7 +34,7 @@ This is the goal state for all instances of the 15-puzzle problem <br />
     Choose initial puzzle from: (1-2)
     >>
     ```
-2. If you choose from file, make sure the file is in ```\test``` folder. Then the program will ask you to input the filename and do not forget the file extensions.
+2. If you choose from file, make sure the file is in ```\test``` folder. Then, the program will ask you to input the filename and do not forget the file extensions. Tile 16 is the representation of empty tile from input, but will not show in output.
 WARNING: if you want to generate the initial puzzle with randomizer, it may took too long to solve the puzzle, sorry :( 
 3. Then, program will show the result.
 

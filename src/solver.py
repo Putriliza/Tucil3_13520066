@@ -8,18 +8,16 @@ from helper import *
 
 # Store the goal state of puzzle
 goal = np.array([[ 1, 2, 3, 4],
-				  [5, 6, 7, 8],
-				  [9, 10, 11 , 12],
-				  [13, 14, 15, 16]])
+				[5, 6, 7, 8],
+				[9, 10, 11 , 12],
+				[13, 14, 15, 16]])
 
 # Store the name of direction of each move
 direction = ['UP', 'RIGHT', 'DOWN', 'LEFT']
 
-# Store the matrix that have been raised, unique
-raisedMatrix = {}
 
 # function to create new node
-def newNode(liveNode, newEmptyTilePos, prevMove) -> node:
+def newNode(liveNode, newEmptyTilePos, prevMove, raisedMatrix) -> node:
 	newMatrix = copy.deepcopy(liveNode.matrix)
 
 	x1, y1 = liveNode.emptyTilePos
@@ -70,6 +68,9 @@ def isValid(position) -> bool:
 
 # main algorithm to solve 15 puzzle based on Branch and Bound algorithm
 def solve(initial):
+	# Store the matrix that have been raised, unique
+	raisedMatrix = {}
+
 	pq = PriorityQueue()
 	totalNodes = 0
 	level = 0
@@ -92,7 +93,7 @@ def solve(initial):
 			# move empty tile to the position based on 4 possible direction, and raised the new nodes
 			newEmptyTilePos = move(liveNode.emptyTilePos, i)
 			if isValid(newEmptyTilePos):
-				child = newNode(liveNode, newEmptyTilePos, direction[i])
+				child = newNode(liveNode, newEmptyTilePos, direction[i], raisedMatrix)
 				if child != None:
 					pq.put(child)
 					totalNodes += 1

@@ -27,7 +27,6 @@ def printRute(node):
 
 # Return tuple (i, j) of position of x in matrix
 def getXPos2D(matrix, x):
-    n = len(matrix)
     for i in range(n):
         for j in range(n):
             if matrix[i][j] == x:
